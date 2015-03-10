@@ -18,7 +18,12 @@ main(){
 
     # we don't have it, so don't do anything
     if [[ ! -e "$videosdir/Paradise or Oblivion.avi" ]] ; then
-        exit
+
+        if [[ -e "$videosdir/Documentaries/Paradise or Oblivion.avi" ]] ; then
+            videosdir="${videosdir}/Documentaries"
+        else
+            exit
+        fi
     fi
 
 

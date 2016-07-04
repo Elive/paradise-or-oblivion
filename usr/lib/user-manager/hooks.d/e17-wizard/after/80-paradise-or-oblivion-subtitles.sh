@@ -19,46 +19,89 @@ main(){
     # we don't have it, so don't do anything
     if [[ ! -e "$videosdir/Paradise or Oblivion.avi" ]] ; then
 
-        if [[ -e "$videosdir/Documentaries/Paradise or Oblivion.avi" ]] ; then
+        if [[ -e "$videosdir/Documentaries/Paradise or Oblivion.avi" ]] || [[ -e "$videosdir/Documentaries/The Choice is Ours.avi" ]] ; then
             videosdir="${videosdir}/Documentaries"
         else
             exit
         fi
     fi
 
+    # Paradise or Oblivion
 
-    if [[ -d "/usr/share/paradise-or-oblivion/subtitles" ]] ; then
-        # first try, complete language
-        for file in /usr/share/paradise-or-oblivion/subtitles/*
-        do
-            language="${file}"
-            language="${language%.srt}"
-            language="${language##*.}"
-            if [[ "${language}" = "${language_local}" ]] ; then
-                cp "$file" "${videosdir}/Paradise or Oblivion.srt"
-                exit 0
-            fi
-        done
+    if [[ -e "$videosdir/Paradise or Oblivion.avi" ]] ; then
+        # first use english for fallback
+        cp -f "/usr/share/paradise-or-oblivion/subtitles/Paradise or Oblivion.en.srt" "${videosdir}/Paradise or Oblivion.srt" 2>/dev/null
 
-        # second try, short mode
-        language_local="${language_local%_*}"
-        for file in /usr/share/paradise-or-oblivion/subtitles/*
-        do
-            language="${file}"
-            language="${language%.srt}"
-            language="${language##*.}"
+        if [[ -d "/usr/share/paradise-or-oblivion/subtitles" ]] ; then
+            # short mode
+            language_local="${language_local%_*}"
+            for file in /usr/share/paradise-or-oblivion/subtitles/*
+            do
+                language="${file}"
+                language="${language%.srt}"
+                language="${language##*.}"
 
-            language="${language%_*}"
+                language="${language%_*}"
 
-            if [[ "${language}" = "${language_local}" ]] ; then
-                cp "$file" "${videosdir}/Paradise or Oblivion.srt"
-                exit 0
-            fi
-        done
+                if [[ "${language}" = "${language_local}" ]] ; then
+                    cp -f "$file" "${videosdir}/Paradise or Oblivion.srt"
+                    #exit 0
+                    break
+                fi
+            done
 
-        # nothing ? ok, use english then...
-        cp -f "/usr/share/paradise-or-oblivion/subtitles/Paradise or Oblivion.en.srt" "${videosdir}/Paradise or Oblivion.srt"
+            # complete language
+            for file in /usr/share/paradise-or-oblivion/subtitles/*
+            do
+                language="${file}"
+                language="${language%.srt}"
+                language="${language##*.}"
+                if [[ "${language}" = "${language_local}" ]] ; then
+                    cp -f "$file" "${videosdir}/Paradise or Oblivion.srt"
+                    #exit 0
+                    break
+                fi
+            done
+        fi
+    fi
 
+    # The Choice is ours
+
+    if [[ -e "$videosdir/The Choice is Ours.avi" ]] ; then
+        # first use english for fallback
+        cp -f "/usr/share/the-choice-is-ours/subtitles/The Choice is Ours.en.srt" "${videosdir}/The Choice is Ours.srt" 2>/dev/null
+
+        if [[ -d "/usr/share/the-choice-is-ours/subtitles" ]] ; then
+            # short mode
+            language_local="${language_local%_*}"
+            for file in /usr/share/the-choice-is-ours/subtitles/*
+            do
+                language="${file}"
+                language="${language%.srt}"
+                language="${language##*.}"
+
+                language="${language%_*}"
+
+                if [[ "${language}" = "${language_local}" ]] ; then
+                    cp -f "$file" "${videosdir}/The Choice is Ours.srt"
+                    #exit 0
+                    break
+                fi
+            done
+
+            # complete language
+            for file in /usr/share/the-choice-is-ours/subtitles/*
+            do
+                language="${file}"
+                language="${language%.srt}"
+                language="${language##*.}"
+                if [[ "${language}" = "${language_local}" ]] ; then
+                    cp -f "$file" "${videosdir}/The Choice is Ours.srt"
+                    #exit 0
+                    break
+                fi
+            done
+        fi
     fi
 
 }

@@ -104,6 +104,46 @@ main(){
         fi
     fi
 
+
+    # Introduction to RBE
+
+    if [[ -e "$videosdir/Introduction to a Resource Based Economy.mp4" ]] ; then
+        # first use english for fallback
+        cp -f "/usr/share/introduction-rbe/subtitles/Introduction to a Resource Based Economy.en.srt" "${videosdir}/Introduction to a Resource Based Economy.srt" 2>/dev/null
+
+        if [[ -d "/usr/share/introduction-rbe/subtitles" ]] ; then
+            # short mode
+            language_local="${language_local%_*}"
+            for file in /usr/share/introduction-rbe/subtitles/*
+            do
+                language="${file}"
+                language="${language%.srt}"
+                language="${language##*.}"
+
+                language="${language%_*}"
+
+                if [[ "${language}" = "${language_local}" ]] ; then
+                    cp -f "$file" "${videosdir}/Introduction to a Resource Based Economy.srt"
+                    #exit 0
+                    break
+                fi
+            done
+
+            # complete language
+            for file in /usr/share/introduction-rbe/subtitles/*
+            do
+                language="${file}"
+                language="${language%.srt}"
+                language="${language##*.}"
+                if [[ "${language}" = "${language_local}" ]] ; then
+                    cp -f "$file" "${videosdir}/Introduction to a Resource Based Economy.srt"
+                    #exit 0
+                    break
+                fi
+            done
+        fi
+    fi
+
 }
 
 #

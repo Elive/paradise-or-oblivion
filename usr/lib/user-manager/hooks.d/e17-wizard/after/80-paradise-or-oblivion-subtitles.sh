@@ -107,6 +107,9 @@ main(){
 
     # Introduction to RBE
 
+    # force dir name
+    videosdir="$( dirname "$videosdir" )/Trailers"
+
     if [[ -e "$videosdir/Introduction to a Resource Based Economy.mp4" ]] ; then
         # first use english for fallback
         cp -f "/usr/share/introduction-rbe/subtitles/Introduction to a Resource Based Economy.en.srt" "${videosdir}/Introduction to a Resource Based Economy.srt" 2>/dev/null

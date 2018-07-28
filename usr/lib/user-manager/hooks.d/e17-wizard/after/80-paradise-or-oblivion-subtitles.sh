@@ -17,14 +17,14 @@ main(){
     videosdir="$( xdg-user-dir VIDEOS )"
 
     # we don't have it, so don't do anything
-    if [[ ! -e "$videosdir/Paradise or Oblivion.avi" ]] ; then
+    #if [[ ! -e "$videosdir/Paradise or Oblivion.avi" ]] ; then
 
         if [[ -e "$videosdir/Documentaries/Paradise or Oblivion.avi" ]] || [[ -e "$videosdir/Documentaries/The Choice is Ours.avi" ]] ; then
             videosdir="${videosdir}/Documentaries"
-        else
-            exit
+        #else
+            #exit
         fi
-    fi
+    #fi
 
     # Paradise or Oblivion
 
